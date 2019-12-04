@@ -32,9 +32,39 @@ class MainWindow(QMainWindow):
         central_widget.setLayout(layout)
         self.setCentralWidget(central_widget)
 
+    def menu(self):
+        """Menu file window"""
+        exitAction = QAction(QIcon('exit.png'), '&Exit', self)
+        exitAction.setShortcut('Ctrl+Q')
+        exitAction.setStatusTip('Exit application')
+        exitAction.triggered.connect(qApp.quit)
+        # Menu File - part Exit
+        newAction = QAction(QIcon('new.png'), '&New', self)
+        newAction.setShortcut('Ctrl+N')
+        newAction.setStatusTip('New file')
+        # newAction.triggered.connect(self.new_file)
+        # Menu File - part Open
+        openAction = QAction(QIcon('open.png'), '&Open', self)
+        openAction.setShortcut('Ctrl+O')
+        openAction.setStatusTip('Open File')
+        # openAction.triggered.connect(self.open_file)
+        # Menu File - part Save As
+        save_asAction = QAction(QIcon('save_as.png'), '&Save As...', self)
+        save_asAction.setShortcut('Ctrl+S')
+        save_asAction.setStatusTip('Save file as...')
+        # save_asAction.triggered.connect(self.save_As)
+        # Initialization buttons menu
+        self.statusBar()
+        menubar = self.menuBar()
+        fileMenu = menubar.addMenu('&File')
+        fileMenu.addAction(newAction)
+        fileMenu.addAction(openAction)
+        fileMenu.addAction(save_asAction)
+        fileMenu.addAction(exitAction)
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     GUI = MainWindow()
+    GUI.menu()
     GUI.show()
     sys.exit(app.exec_())
