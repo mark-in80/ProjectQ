@@ -62,9 +62,24 @@ class MainWindow(QMainWindow):
         fileMenu.addAction(save_asAction)
         fileMenu.addAction(exitAction)
 
+    def font_size_changed(self, value):
+        """Font resize"""
+        text_char_format = Qt.QTextCharFormat()
+        text_char_format.setFontPointSize(value)
+        self.common_font(text_char_format)
+
+    def common_font(self, text_char_format):
+        """Combine text selection to adjust font size"""
+        cursor = self.textEdit.textCursor()
+        if not cursor.hasSelection():
+            cursor.select(Qt.QTextCursor.WordUnderCursor)
+
+        cursor.mergeCharFormat(text_char_format)
+
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     GUI = MainWindow()
     GUI.menu()
+    GUI.font()
     GUI.show()
     sys.exit(app.exec_())
