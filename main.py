@@ -14,7 +14,7 @@ class MainWindow(QMainWindow):
         self.resize(980, 850)
         # main window and name
         self.setGeometry(518, 70, 980, 850)
-        self.setWindowTitle('')
+        self.setWindowTitle('QPad')
 
     def font(self):
         """Font text"""
@@ -47,7 +47,7 @@ class MainWindow(QMainWindow):
         openAction = QAction(QIcon('open.png'), '&Open', self)
         openAction.setShortcut('Ctrl+O')
         openAction.setStatusTip('Open File')
-        # openAction.triggered.connect(self.open_file)
+        openAction.triggered.connect(self.open_file)
         # Menu File - part Save As
         save_asAction = QAction(QIcon('save_as.png'), '&Save As...', self)
         save_asAction.setShortcut('Ctrl+S')
@@ -76,10 +76,21 @@ class MainWindow(QMainWindow):
 
         cursor.mergeCharFormat(text_char_format)
 
+    def new_file(self):
+        """Dialog window, new file"""
+        self.textEdit.setText("")
+
+    def open_file(self):
+        """Dialog window, open file"""
+        open_fname = QFileDialog.getOpenFileName(self, 'Open file')[0]
+        if open_fname:
+            self.textEdit.setText(controller.ReadFile(open_fname))
+
+
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     GUI = MainWindow()
-    GUI.menu()
     GUI.font()
+    GUI.menu()
     GUI.show()
     sys.exit(app.exec_())
