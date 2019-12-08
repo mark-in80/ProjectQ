@@ -42,7 +42,7 @@ class MainWindow(QMainWindow):
         newAction = QAction(QIcon('new.png'), '&New', self)
         newAction.setShortcut('Ctrl+N')
         newAction.setStatusTip('New file')
-        # newAction.triggered.connect(self.new_file)
+        newAction.triggered.connect(self.new_file)
         # Menu File - part Open
         openAction = QAction(QIcon('open.png'), '&Open', self)
         openAction.setShortcut('Ctrl+O')
@@ -52,7 +52,7 @@ class MainWindow(QMainWindow):
         save_asAction = QAction(QIcon('save_as.png'), '&Save As...', self)
         save_asAction.setShortcut('Ctrl+S')
         save_asAction.setStatusTip('Save file as...')
-        # save_asAction.triggered.connect(self.save_As)
+        save_asAction.triggered.connect(self.save_As)
         # Initialization buttons menu
         self.statusBar()
         menubar = self.menuBar()
@@ -85,6 +85,13 @@ class MainWindow(QMainWindow):
         open_fname = QFileDialog.getOpenFileName(self, 'Open file')[0]
         if open_fname:
             self.textEdit.setText(controller.ReadFile(open_fname))
+
+    def save_As(self):
+        """Dialog window save file"""
+        save_fname, ok = QFileDialog.getSaveFileName(self)
+        if not ok:
+            return
+        controller.SaveFile(save_fname, self.textEdit.toPlainText())
 
 
 if __name__ == '__main__':
