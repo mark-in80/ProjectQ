@@ -2,7 +2,7 @@ import sys
 from PyQt5.QtWidgets import (QMainWindow, QTextEdit, QAction, QFileDialog, QApplication, qApp)
 from PyQt5 import Qt
 from PyQt5.Qt import (QSyntaxHighlighter, QTextCharFormat, QIcon, QColor, QFont, QRegularExpression)
-
+import QtPad_controller as controller
 
 class MainWindow(QMainWindow):
     def __init__(self):
