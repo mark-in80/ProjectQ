@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import (QMainWindow, QTextEdit, QAction, QFileDialog, QAppl
 from PyQt5 import Qt
 from PyQt5.Qt import (QSyntaxHighlighter, QTextCharFormat, QIcon, QColor, QFont, QRegularExpression)
 import QtPad_controller as controller
+from Highlighter import MyHighlighter
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -99,5 +100,6 @@ if __name__ == '__main__':
     GUI = MainWindow()
     GUI.font()
     GUI.menu()
+    H = MyHighlighter(GUI.textEdit.document())
     GUI.show()
     sys.exit(app.exec_())
