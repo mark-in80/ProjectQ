@@ -2,7 +2,8 @@ import sys
 from PyQt5.QtWidgets import (QMainWindow, QTextEdit, QAction, QFileDialog, QApplication, qApp)
 from PyQt5 import Qt
 from PyQt5.Qt import (QSyntaxHighlighter, QTextCharFormat, QIcon, QColor, QFont, QRegularExpression)
-
+import QtPad_controller as controller
+from Highlighter import MyHighlighter
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -14,7 +15,7 @@ class MainWindow(QMainWindow):
         self.resize(980, 850)
         # main window and name
         self.setGeometry(518, 70, 980, 850)
-        self.setWindowTitle('')
+        self.setWindowTitle('QPad')
 
     def font(self):
         """Font text"""
@@ -42,17 +43,17 @@ class MainWindow(QMainWindow):
         newAction = QAction(QIcon('new.png'), '&New', self)
         newAction.setShortcut('Ctrl+N')
         newAction.setStatusTip('New file')
-        # newAction.triggered.connect(self.new_file)
+        newAction.triggered.connect(self.new_file)
         # Menu File - part Open
         openAction = QAction(QIcon('open.png'), '&Open', self)
         openAction.setShortcut('Ctrl+O')
         openAction.setStatusTip('Open File')
-        # openAction.triggered.connect(self.open_file)
+        openAction.triggered.connect(self.open_file)
         # Menu File - part Save As
         save_asAction = QAction(QIcon('save_as.png'), '&Save As...', self)
         save_asAction.setShortcut('Ctrl+S')
         save_asAction.setStatusTip('Save file as...')
-        # save_asAction.triggered.connect(self.save_As)
+        save_asAction.triggered.connect(self.save_As)
         # Initialization buttons menu
         self.statusBar()
         menubar = self.menuBar()
@@ -62,9 +63,43 @@ class MainWindow(QMainWindow):
         fileMenu.addAction(save_asAction)
         fileMenu.addAction(exitAction)
 
+    def font_size_changed(self, value):
+        """Font resize"""
+        text_char_format = Qt.QTextCharFormat()
+        text_char_format.setFontPointSize(value)
+        self.common_font(text_char_format)
+
+    def common_font(self, text_char_format):
+        """Combine text selection to adjust font size"""
+        cursor = self.textEdit.textCursor()
+        if not cursor.hasSelection():
+            cursor.select(Qt.QTextCursor.WordUnderCursor)
+
+        cursor.mergeCharFormat(text_char_format)
+
+    def new_file(self):
+        """Dialog window, new file"""
+        self.textEdit.setText("")
+
+    def open_file(self):
+        """Dialog window, open file"""
+        open_fname = QFileDialog.getOpenFileName(self, 'Open file')[0]
+        if open_fname:
+            self.textEdit.setText(controller.ReadFile(open_fname))
+
+    def save_As(self):
+        """Dialog window save file"""
+        save_fname, ok = QFileDialog.getSaveFileName(self)
+        if not ok:
+            return
+        controller.SaveFile(save_fname, self.textEdit.toPlainText())
+
+
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     GUI = MainWindow()
+    GUI.font()
     GUI.menu()
+    H = MyHighlighter(GUI.textEdit.document())
     GUI.show()
     sys.exit(app.exec_())
