@@ -12,25 +12,29 @@ class MyHighlighter(QSyntaxHighlighter):
         char_format = QTextCharFormat()
         char_format.setFontItalic(False)
         char_format.setForeground(QColor("red"))
-        self.regexp_by_format[r'\='] = char_format
 
         char_format = QTextCharFormat()
         char_format.setFontWeight(QFont.Bold)
         char_format.setForeground(QColor("red"))
-        self.regexp_by_format[r'(.+?)(\=|\s|\b)'] = char_format
+        self.regexp_by_format[r'|.+:'] = char_format  # key - red color
 
         char_format = QTextCharFormat()
         char_format.setFontItalic(True)
-        char_format.setForeground(QColor("white"))
+        char_format.setForeground(QColor("black"))
         self.regexp_by_format[r'(\=|\s\=)(.*)'] = char_format
+        self.regexp_by_format[r':'] = char_format  # black - :
 
         char_format = QTextCharFormat()
-        char_format.setForeground(QColor("gray"))
+        char_format.setForeground(QColor("orange"))  # добавлено 24.01
         self.regexp_by_format[r'\[(.+?)\]'] = char_format
 
         char_format = QTextCharFormat()
-        char_format.setForeground(QColor("lightgray"))
+        char_format.setForeground(QColor("blue"))  # добавлено 24.01
         self.regexp_by_format[r'(\;|\#)(.+?)$'] = char_format
+
+        char_format = QTextCharFormat()
+        char_format.setForeground(QColor("green"))  # new color
+        self.regexp_by_format[r'|.+='] = char_format  # key - red color
 
     def initForJSON(self):
 
@@ -57,7 +61,6 @@ class MyHighlighter(QSyntaxHighlighter):
         self.regexp_by_format[r'\,'] = char_format
         self.regexp_by_format[r'\#'] = char_format  # comments in python style
 
-
     def highlightBlock(self, text):
         for regexp, char_format in self.regexp_by_format.items():
             expression = QRegularExpression(regexp)
@@ -69,12 +72,8 @@ class MyHighlighter(QSyntaxHighlighter):
 
 if __name__ == '__main__':
     app = QApplication([])
-
-    mw = QTextEdit()
-    mw.setStyleSheet("QTextEdit{font-size:20px;background-color: white; color: white;}")
-
-    highlighter = MyHighlighter(mw.document())
-
-    mw.show()
-
+    main_text = QTextEdit()
+    main_text.setStyleSheet("QTextEdit{font-size:20px;background-color: white; color: white;}")
+    highlighter = MyHighlighter(main_text.document())
+    main_text.show()
     app.exec()

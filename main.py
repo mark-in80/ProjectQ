@@ -4,6 +4,8 @@ from PyQt5 import Qt
 from PyQt5.Qt import (QSyntaxHighlighter, QTextCharFormat, QIcon, QColor, QFont, QRegularExpression)
 import QtPad_controller as controller
 from Highlighter import MyHighlighter
+from PyQt5.QtWidgets import QWidget, QMessageBox
+
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -16,6 +18,18 @@ class MainWindow(QMainWindow):
         # main window and name
         self.setGeometry(518, 70, 980, 850)
         self.setWindowTitle('QPad')
+
+    def closeEvent(self, event):
+        """Close main window"""
+        reply = QMessageBox.question(self, 'Message',
+                                     "\t Save?", QMessageBox.Yes |
+                                     QMessageBox.No | QMessageBox.Cancel, QMessageBox.Cancel)
+        if reply == QMessageBox.Yes:
+            self.save_As()  # call method save
+        elif reply == QMessageBox.No:
+            event.accept()
+        else:
+            event.ignore()
 
     def font(self):
         """Font text"""
