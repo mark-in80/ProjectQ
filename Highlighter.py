@@ -12,12 +12,10 @@ class MyHighlighter(QSyntaxHighlighter):
         char_format = QTextCharFormat()
         char_format.setFontItalic(False)
         char_format.setForeground(QColor("red"))
-        # self.regexp_by_format[r'\='] = char_format
 
         char_format = QTextCharFormat()
         char_format.setFontWeight(QFont.Bold)
         char_format.setForeground(QColor("red"))
-        # self.regexp_by_format[r'(.+?)(\=|\s|\b)'] = char_format
         self.regexp_by_format[r'|.+:'] = char_format  # key - red color
 
         char_format = QTextCharFormat()
@@ -33,8 +31,6 @@ class MyHighlighter(QSyntaxHighlighter):
         char_format = QTextCharFormat()
         char_format.setForeground(QColor("blue"))  # добавлено 24.01
         self.regexp_by_format[r'(\;|\#)(.+?)$'] = char_format
-        # self.regexp_by_format[r'\"'] = char_format  # добавлено 24.01
-        # self.regexp_by_format[r'|.+='] = char_format  # key - red color 24.01 !!!!
 
         char_format = QTextCharFormat()
         char_format.setForeground(QColor("green"))  # new color
