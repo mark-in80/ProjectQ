@@ -1,6 +1,5 @@
 from PyQt5.Qt import *
 
-
 class MyHighlighter(QSyntaxHighlighter):
     def __init__(self, parent):
         super().__init__(parent)
@@ -16,20 +15,20 @@ class MyHighlighter(QSyntaxHighlighter):
         char_format = QTextCharFormat()
         char_format.setFontWeight(QFont.Bold)
         char_format.setForeground(QColor("red"))
-        self.regexp_by_format[r'|.+:'] = char_format  # key - red color
+        self.regexp_by_format[r'|.+:'] = char_format
 
         char_format = QTextCharFormat()
         char_format.setFontItalic(True)
         char_format.setForeground(QColor("black"))
         self.regexp_by_format[r'(\=|\s\=)(.*)'] = char_format
-        self.regexp_by_format[r':'] = char_format  # black - :
+        self.regexp_by_format[r':'] = char_format
 
         char_format = QTextCharFormat()
-        char_format.setForeground(QColor("orange"))  # добавлено 24.01
+        char_format.setForeground(QColor("orange"))
         self.regexp_by_format[r'\[(.+?)\]'] = char_format
 
         char_format = QTextCharFormat()
-        char_format.setForeground(QColor("blue"))  # добавлено 24.01
+        char_format.setForeground(QColor("blue"))
         self.regexp_by_format[r'(\;|\#)(.+?)$'] = char_format
 
         char_format = QTextCharFormat()
